@@ -1,0 +1,40 @@
+	JMP start
+start:
+	MOV D, 232	; Point to output
+	JMP prob_6
+stop:        HLT             ; Stop execution
+prob_6:
+	MOV [0], 0x01
+	MOV [1], 0x04
+	MOV [2], 0x02
+	MOV [3], 0x09
+	MOV [4], 0x10
+
+	PUSH [0]
+	PUSH [1]
+	PUSH [2]
+	PUSH [3]
+	PUSH [4]
+
+	MOV B, SP+5
+	MOV C, SP
+	INC SP
+	
+
+	MOV A, [SP]
+
+loop_sort:
+	INC SP
+	CMP A, SP
+	JB process
+	CMP SP, B
+	JB loop_sort
+	JMP output
+
+process:
+	MOV A, [SP]
+	CMP SP, B
+	JB loop_sort
+	JMP output
+
+output:
