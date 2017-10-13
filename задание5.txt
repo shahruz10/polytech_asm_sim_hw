@@ -1,0 +1,20 @@
+; Simple example
+; Writes Hello World to the output
+fac: DB 0x05
+	JMP start
+start:
+	MOV D, 232	; Point to output
+	JMP prob_5
+stop:        HLT             ; Stop execution
+
+
+prob_5:
+	
+	MOV B, [fac]
+	MOV A, B
+loop_fac:
+	DEC B
+	MUL B
+	CMP B, 0x01
+	JE stop
+	JMP loop_fac
