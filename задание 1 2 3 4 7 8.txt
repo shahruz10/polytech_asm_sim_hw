@@ -1,0 +1,102 @@
+; Simple example
+; Writes Hello World to the output
+
+JMP start
+birthday: DB "16/06"
+       DB 0	; String terminator
+date: DB 0x01
+symbol: DB 0x01
+month: 	DB 0x6
+fac: 	DB 0x05
+result: DB 0x00
+start:
+	;MOV [0], 0x11
+	MOV C, birthday
+	MOV D, 232	; Point to output
+
+	JMP prob_8
+	;CALL print
+stop:   HLT             ; Stop execution
+
+prob_1:
+	MOV A, date  
+	MOV B, 0x06
+	JMP prob_2
+
+prob_2:
+	MOV C, A
+	MOV A, B
+	MOV B, C
+	JMP prob_3
+
+prob_3:
+	MOV A, 0x11
+	MOV B, 0x06
+	ADD A, B
+	JMP prob_4
+prob_4:
+	MOV C, birthday
+	CALL print
+	
+print:			; print(C:*from, D:*to)
+	PUSH A
+	PUSH B
+	MOV B, 0
+.loop:
+	MOV A, [C]	; Get char from var
+	MOV [D], A	; Write to output
+	INC C
+	INC D  
+	CMP B, [C]	; Check if end
+	JNZ .loop	; jump if not
+
+	POP B
+	POP A
+	JMP prob_5
+prob_5:
+	MOV A, 0x05
+	MOV B, 0x04
+loop_factorial:
+	MUL B
+	DEC B
+	CMP B, 0x01
+	JE prob_7
+	JMP loop_factorial
+
+prob_7:
+	MOV B, 0x41
+	MOV [symbol], B
+	MOV C, symbol; Point to var 
+	MOV D, 232	; Point to output
+loop_ascii:
+	MOV C, symbol
+	MOV A, [C]
+	MOV [D], A
+	INC D
+	INC B
+	MOV [symbol], B
+	CMP D, 0xFF
+	JE stop
+	JMP loop_ascii
+
+
+array_element: DB 0
+
+prob_8:
+	MOV [0], 11
+	MOV [1], 12
+	MOV [2], 10
+	MOV [3], 9
+	MOV [4], 2
+	MOV [5], 3
+	MOV [6], 5
+
+	
+	PUSH [0]
+loop_max:
+	MOV D, [0]
+	JMP stop
+
+	
+	
+	
